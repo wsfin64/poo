@@ -7,7 +7,10 @@ public class Sorteio {
     private int min;
     private int max;
 
-    public Sorteio(int n, int min, int max){
+    public Sorteio(int n, int min, int max) throws Exception{
+        if (n <= 0 || n > 100 || min < 0 || max < min){
+            throw new Exception("Valores inválidos");
+        }
         this.n = n;
         this.min = min;
         this.max = max;
@@ -94,13 +97,23 @@ public class Sorteio {
         }
     }
 
-    public String resultado(){
+    public String resultado(String formato) throws Exception{
+
+        if (formato == null){
+            throw new Exception("O valor do padrão não pode ser null");
+        }
+
         ordenarNumeros();
 
         String res = "";
 
         for (int n : numeros){
-            res = res + " " + n;
+            if (res == ""){
+                res = res + " " + n;
+            }
+            else {
+                res = res + " " + formato + " " + n;
+            }
         }
         return res;
     }
