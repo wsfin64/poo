@@ -1,6 +1,7 @@
 // Alunos: Wellington da Silva e Rebeka Moreira
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class Sorteio {
 
@@ -10,13 +11,20 @@ public class Sorteio {
     private int max;
 
     public Sorteio(int n, int min, int max) throws Exception{
-        if (n <= 0 || n > 100 || min < 0 || max < min){
-            throw new Exception("Valores inválidos");
+
+        if (n <= 0 || n > 100){
+            throw new Exception("O valor de n deve estar entre 1 e 99");
+        }else if (min < 0){
+            throw new Exception("O valor mínimo precisa ser maior que 0");
+        }else if (max < min){
+            throw new Exception("O valor maximo precisa ser maior que o valor minimo");
+        }else {
+            this.n = n;
+            this.min = min;
+            this.max = max;
+            this.numeros = new int[n];
         }
-        this.n = n;
-        this.min = min;
-        this.max = max;
-        this.numeros = new int[n];
+
     }
 
     public int getN() {
