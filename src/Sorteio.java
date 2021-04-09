@@ -1,3 +1,5 @@
+// Alunos: Wellington da Silva e Rebeka Moreira
+
 import java.util.Random;
 
 public class Sorteio {
@@ -68,25 +70,59 @@ public class Sorteio {
 
     }
 
-    public int proximoNumero(){
+    public void proximoNumero() throws Exception{
+
+        // Verificando se todos os números do sorteio já foram gerados
+        if (terminou()){
+            throw new Exception("Não é possível gerar mais números, pois o sorteio já terminou");
+        }
 
         Random numero = new Random();
         int numeroSorteado = numero.nextInt((max - min) + 1) + min;
 
-        return numeroSorteado;
+        int cont = 0;
+
+        while (true){
+            if (numeros[cont] == 0){
+                boolean existe = false;
+
+                for (int i = 0; i < numeros.length; i++){
+                    if (numeros[i] == numeroSorteado){
+                        existe = true;
+                        numeroSorteado = numero.nextInt((max - min) + 1) + min;
+                    }
+                    else {
+                        existe = false;
+                    }
+                }
+
+                if (!existe){
+                    numeros[cont] = numeroSorteado;
+                }
+
+            }
+            else {
+                cont += 1;
+                if (cont == numeros.length){
+                    break;
+                }
+            }
+        }
 
     }
 
     public void gerarNumeros(){
 
+        Random numero = new Random();
+
         while (!terminou()) {
 
             for (int i = 0; i < numeros.length; i++){
-                int numeroSorteado = proximoNumero();
+                int numeroSorteado = numero.nextInt((max - min) + 1) + min;
 
                 for (int j = 0; j < numeros.length; j++){
                     if(numeroSorteado == numeros[j] && j != i){
-                        numeroSorteado = proximoNumero();
+                        numeroSorteado = numero.nextInt((max - min) + 1) + min;
                     }else {
                         numeros[i] = numeroSorteado;
                     }
